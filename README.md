@@ -1,31 +1,35 @@
-# 🌍 WanderLust
+# 🌍 TravelBandhu
 
-A full-stack travel and accommodation web application inspired by modern property listing platforms. WanderLust allows users to explore, create, review, and manage travel listings through a responsive and user-friendly interface.
+TravelBandhu is a full-stack travel and accommodation web application that allows users to explore travel destinations, discover property listings, create and manage their own listings, and share reviews.
+
+The project is designed to provide a simple and user-friendly platform for travelers to find suitable stays and share their experiences.
 
 ## ✨ Features
 
 * 🏠 Browse and explore property listings
-* 🔍 View detailed information about each listing
-* ➕ Create new listings
-* ✏️ Edit and manage your own listings
-* 🗑️ Delete listings
-* ⭐ Add and delete reviews
+* 🔍 View detailed information about listings
+* ➕ Create new property listings
+* ✏️ Edit your own listings
+* 🗑️ Delete your own listings
+* ⭐ Add reviews to listings
+* 🗑️ Delete reviews
 * 🔐 User authentication and authorization
-* 👤 User-based listing ownership
+* 👤 Listing ownership and authorization
 * 🖼️ Image upload and cloud storage
-* 📱 Responsive UI
-* ⚡ Server-side rendering with EJS
 * 🔔 Flash messages for user feedback
+* 📱 Responsive user interface
+* 🗺️ Location-based property information
 
 ## 🛠️ Tech Stack
 
 ### Frontend
 
-* HTML
-* CSS
+* HTML5
+* CSS3
 * JavaScript
 * Bootstrap
 * EJS
+* EJS-Mate
 
 ### Backend
 
@@ -34,37 +38,52 @@ A full-stack travel and accommodation web application inspired by modern propert
 * MongoDB
 * Mongoose
 
-### Authentication
+### Authentication & Security
 
 * Passport.js
 * Passport-Local
 * Express Session
+* Connect-Mongo
+* Connect-Flash
 
-### Other Technologies
+### Image Management
 
 * Cloudinary
 * Multer
-* EJS-Mate
+* Multer-Storage-Cloudinary
+
+### Other Tools
+
 * Method-Override
-* Connect-Mongo
-* Connect-Flash
+* Dotenv
+* Nodemon
 
 ## 📂 Project Structure
 
 ```text
-WanderLust/
+TravelBandhu/
 │
 ├── controllers/
+│
 ├── models/
+│
 ├── routes/
+│
 ├── views/
+│   ├── includes/
+│   ├── layouts/
+│   ├── listings/
+│   ├── users/
+│   └── reviews/
+│
 ├── public/
 │   ├── css/
 │   └── js/
 │
 ├── utils/
-├── middleware.js
+│
 ├── app.js
+├── middleware.js
 ├── schema.js
 ├── package.json
 ├── package-lock.json
@@ -73,16 +92,18 @@ WanderLust/
 
 ## 🚀 Getting Started
 
+Follow these steps to run TravelBandhu locally.
+
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/dhiruuuu7766/WanderLust-.git
+git clone https://github.com/dhiruuuu7766/TravelBandhu.git
 ```
 
 ### 2. Navigate to the Project
 
 ```bash
-cd WanderLust-
+cd TravelBandhu
 ```
 
 ### 3. Install Dependencies
@@ -99,26 +120,28 @@ Create a `.env` file in the root directory:
 ATLASDB_URL=your_mongodb_connection_string
 SECRET=your_session_secret
 
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_KEY=your_cloudinary_key
-CLOUDINARY_SECRET=your_cloudinary_secret
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_KEY=your_cloudinary_api_key
+CLOUDINARY_SECRET=your_cloudinary_api_secret
 ```
 
-> Never upload your `.env` file or expose your database and Cloudinary credentials publicly.
+> ⚠️ Never commit your `.env` file to GitHub. Keep your database and Cloudinary credentials private.
 
 ### 5. Start the Application
+
+Using Node.js:
 
 ```bash
 node app.js
 ```
 
-For development with Nodemon:
+Or using Nodemon during development:
 
 ```bash
 nodemon app.js
 ```
 
-The application will run locally on:
+The application will be available at:
 
 ```text
 http://localhost:3000
@@ -126,27 +149,92 @@ http://localhost:3000
 
 ## 🔐 Authentication
 
-WanderLust uses Passport.js for authentication and authorization.
+TravelBandhu uses **Passport.js** for user authentication.
 
 Users can:
 
 * Register an account
 * Log in and log out
-* Create listings
-* Manage their own listings
-* Add reviews to listings
+* Create property listings
+* Edit their own listings
+* Delete their own listings
+* Add reviews
+* Manage their reviews
 
-## 🖼️ Image Management
+Authorization middleware ensures that users can only modify resources they are authorized to manage.
 
-Listing images are uploaded and stored using **Cloudinary**, while image information is stored in MongoDB.
+## 🏠 Listings
+
+Users can create property listings with information such as:
+
+* Title
+* Description
+* Location
+* Country
+* Price
+* Image
+
+Users can also edit or delete listings they own.
+
+## 🖼️ Image Upload
+
+TravelBandhu uses **Cloudinary** for image storage.
+
+The image upload workflow uses:
+
+```text
+User
+  ↓
+Multer
+  ↓
+Cloudinary
+  ↓
+Image URL
+  ↓
+MongoDB
+```
+
+Listing image information is stored along with the listing data in MongoDB.
 
 ## ⭐ Reviews
 
-Authenticated users can add reviews to listings. Users can also delete reviews according to the application's authorization rules.
+Authenticated users can add reviews to property listings.
+
+Each review contains:
+
+* Rating
+* Comment
+* User reference
+* Listing reference
+
+Users can also delete reviews according to the application's authorization rules.
+
+## 🗄️ Database
+
+TravelBandhu uses **MongoDB** with **Mongoose** for database management.
+
+Main data models include:
+
+* User
+* Listing
+* Review
+
+Relationships between users, listings, and reviews are managed using MongoDB references.
+
+## 🔒 Security
+
+The project includes several security practices:
+
+* Authentication using Passport.js
+* Authorization middleware
+* Session-based authentication
+* Environment variables for sensitive credentials
+* Protected routes
+* User ownership validation
 
 ## 📸 Screenshots
 
-Add screenshots of your project here:
+Add project screenshots here to showcase the application.
 
 ```text
 Coming Soon
@@ -154,21 +242,48 @@ Coming Soon
 
 ## 🔮 Future Improvements
 
-* 🗺️ Interactive maps and location-based search
-* 🔎 Advanced listing filters
+Some planned improvements include:
+
+* 🗺️ Interactive maps
+* 🔎 Advanced search and filtering
 * ❤️ Wishlist functionality
-* 💳 Online booking and payment
+* 📅 Property booking system
+* 💳 Online payment integration
 * 📧 Email notifications
+* ⭐ Improved rating system
+* 📱 Enhanced mobile experience
 * ☁️ Production deployment
-* 📱 Improved mobile experience
+
+## 🎯 Learning Outcomes
+
+Through this project, I practiced and improved my understanding of:
+
+* RESTful API development
+* Express.js
+* MongoDB and Mongoose
+* Authentication and authorization
+* MVC architecture
+* CRUD operations
+* Middleware
+* Session management
+* Image upload and cloud storage
+* EJS templating
+* Database relationships
+* Git and GitHub
 
 ## 👨‍💻 Author
 
-**Dhiraj Kumar Ram**
+### Dhiraj Kumar Ram
+
+**B.Tech CSE Student | Full Stack / MERN Developer**
 
 * GitHub: https://github.com/dhiruuuu7766
 * LinkedIn: https://linkedin.com/in/dhiraj-kumarr
 
 ## 📄 License
 
-This project is created for learning and portfolio purposes.
+This project was developed for learning and portfolio purposes.
+
+---
+
+⭐ If you found this project useful, consider giving it a star!
